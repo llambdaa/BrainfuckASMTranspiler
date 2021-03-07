@@ -1,4 +1,4 @@
-package parser;
+package transpiler.brainfuck.parser;
 
 import java.util.List;
 import java.util.Optional;

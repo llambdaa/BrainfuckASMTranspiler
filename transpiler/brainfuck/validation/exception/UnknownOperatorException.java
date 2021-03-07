@@ -1,4 +1,4 @@
-package validation.exception;
+package transpiler.brainfuck.validation.exception;
 
 public class UnknownOperatorException extends Exception {
 

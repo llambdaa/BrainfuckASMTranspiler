@@ -1,6 +1,6 @@
-package parser;
+package transpiler.brainfuck.parser;
 
-import validation.Validator;
+import transpiler.brainfuck.validation.Validator;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -12,20 +12,19 @@ public class Parser {
     /**
      * These static members of the Parser class are
      * the placeholder replacements for the framework
-     * that is defined within '/template/template.asm'
+     * that is defined within '/transpiler.brainfuck.template/transpiler.brainfuck.template.asm'
      *
      * Furthermore 'PATTERNS' holds each pattern with
      * its respective expressions that are used for transpilation.
      */
-    private static final List< Pattern > PATTERNS           = new ArrayList<>();
+    private static final List< Pattern > PATTERNS   = new ArrayList<>();
     public static final String STACK_SIZE           = "0x4";
     public static final String STACK_SIZE_REGISTER  = "rcx";
     public static final String INDEX_REGISTER       = "rbx";
-    private static final String CACHE_REGISTER       = "cl";
+    private static final String CACHE_REGISTER      = "cl";
 
     /**
-     * Statically, the pattern used for operator recognition are loaded.
-     *
+     * Statically, the patterns used for operator recognition are loaded.
      * They contain the rules for translation of several patterns.
      * Since that also requires knowledge of '(NASM) assembly' and describing several
      * steps is neither very illuminating (e.g. certain syscalls) nor helps
@@ -332,7 +331,7 @@ public class Parser {
 
         try {
 
-            String content = new String( Files.readAllBytes( path ), StandardCharsets.US_ASCII ).replaceAll( "\n", "" );
+            String content = Files.readString( path, StandardCharsets.US_ASCII ).replaceAll( "\n", "" );
 
             if ( content.length() > 0x0 ) {
 
@@ -347,7 +346,7 @@ public class Parser {
 
             } else {
 
-                return new String();
+                return "";
 
             }
 

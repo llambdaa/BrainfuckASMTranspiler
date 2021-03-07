@@ -1,19 +1,18 @@
-package core;
+package transpiler.brainfuck.core;
 
-import parser.Parser;
+import transpiler.brainfuck.parser.Parser;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
 /**
  * This program transpiles 'Brainfuck' to 'NASM assembly' (Linux)
  * while making some optimizations.
- *
- * Author: Lukas Rapp
- * Date:   July 7th 2020
  */
 public class Transpiler {
 
@@ -30,7 +29,7 @@ public class Transpiler {
             if ( arguments.length == 0x2 ) {
 
                 /*
-                The coarse structure of the transpiled programs is described by the file '/template/template.asm'.
+                The coarse structure of the transpiled programs is described by the file '/transpiler.brainfuck.template/transpiler.brainfuck.template.asm'.
                 It first is loaded from inside the JAR with help of the Scanner implementation and then
                 certain placeholders (e.g. %SOURCE% which will contain the transpiled source code) are
                 replaced with the actual values.
@@ -38,7 +37,7 @@ public class Transpiler {
                 The transpilation work is actually done by the parser which reads in the operator sequence
                 of the given 'Brainfuck' program and translates it into 'NASM assembly' while making optimizations.
                  */
-                Scanner scanner = new Scanner( Transpiler.class.getResourceAsStream( "/template/template.asm" ) ).useDelimiter( "\\A" );
+                Scanner scanner = new Scanner( Transpiler.class.getResourceAsStream("/transpiler/brainfuck/template/template.asm") ).useDelimiter( "\\A" );
                 String template = scanner.hasNext() ? scanner.next() : "";
                 String modified = template.replaceAll( "%STACK_SIZE_REGISTER%", Parser.STACK_SIZE_REGISTER )
                                           .replaceAll( "%STACK_SIZE%", Parser.STACK_SIZE )
@@ -49,7 +48,7 @@ public class Transpiler {
                 After transpilation, the assembly source code is then
                 transferred into the specified destination file.
                  */
-                PrintWriter writer = new PrintWriter( arguments[ 1 ], "UTF-8" );
+                PrintWriter writer = new PrintWriter( arguments[ 1 ], StandardCharsets.UTF_8 );
                 writer.println( modified );
                 writer.close();
 
@@ -59,7 +58,7 @@ public class Transpiler {
 
             }
 
-        } catch ( FileNotFoundException | UnsupportedEncodingException exception ) {
+        } catch ( IOException exception ) {
 
             exception.printStackTrace();
 

@@ -1,8 +1,8 @@
-package validation;
+package transpiler.brainfuck.validation;
 
-import validation.exception.UnknownOperatorException;
-import validation.exception.UnclosedBracketException;
-import validation.exception.UnopenedBracketException;
+import transpiler.brainfuck.validation.exception.UnknownOperatorException;
+import transpiler.brainfuck.validation.exception.UnclosedBracketException;
+import transpiler.brainfuck.validation.exception.UnopenedBracketException;
 
 import java.util.Stack;
 
@@ -10,7 +10,7 @@ import java.util.Stack;
  * Not each and every 'Brainfuck' program might be valid because either
  * there are invalid and unknown characters or because brackets are not balanced.
  *
- * Therefore, there is need for a validation tool.
+ * Therefore, there is need for a transpiler.brainfuck.validation tool.
  * This static implementation does exactly that:
  * It iterates over each operator and checks whether it is a valid character and whether
  * brackets are balanced.
@@ -38,7 +38,7 @@ public class Validator {
             String operator = operators[ i ];
 
             /*
-            The first aspect of this validator is character validation.
+            The first aspect of this validator is character transpiler.brainfuck.validation.
             If the currently inspected character matches this expression,
             it is a valid operator.
              */
